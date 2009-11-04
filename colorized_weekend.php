@@ -3,7 +3,7 @@
 Plugin Name:  Colorized Weekend Widget
 Plugin URI: http://www.vjcatkick.com/?page_id=10750
 Description: Colorize date stamp
-Version: 0.0.2
+Version: 0.0.3
 Author: V.J.Catkick
 Author URI: http://www.vjcatkick.com/
 */
@@ -41,16 +41,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 - Initial release
 * Jun 29 2009 - v0.0.2
 - svn version
+* Nov 04 2009 - v0.0.3
+- bug fix
 */
 
 function the_time_specific_holiday( $is_holidays_apend_str ) {
 	$retstr = '';
 	$fixed_holiday_table = array( 1=>'元旦', 42=>'建国記念の日', 119=>'昭和の日', 123=>'憲法記念日', 124=>'みどりの日', 125=>'こどもの日', 307=>'文化の日', 327=>'勤労感謝の日', 357=>'天皇誕生日' );
 	$day_num = get_the_time( 'z' ) + 1;
+	$week_num = get_the_time( 'w' ) - 1;
 
 	$result = false;
 	foreach( $fixed_holiday_table as $key => $value ) { 
-		if( ( $key != 123 && $key != 124 ) && ( $day_num - 1 ==  $key ) ) {
+		if( ( $key != 123 && $key != 124 ) && ( $day_num - 1 ==  $key ) && $week_num === 0 ) {
 			$retstr = ' ';
 			if( $is_holidays_apend_str ) $retstr .= '振替休日';
 			$result = true;
