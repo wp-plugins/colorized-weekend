@@ -3,7 +3,7 @@
 Plugin Name:  Colorized Weekend Widget
 Plugin URI: http://www.vjcatkick.com/?page_id=10750
 Description: Colorize date stamp
-Version: 0.0.3
+Version: 0.0.4
 Author: V.J.Catkick
 Author URI: http://www.vjcatkick.com/
 */
@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 - svn version
 * Nov 04 2009 - v0.0.3
 - bug fix
+* Jan 09 2010 - v0.0.4
+- added echo/non echo option at function arguments
 */
 
 function the_time_specific_holiday( $is_holidays_apend_str ) {
@@ -92,7 +94,7 @@ function the_time_specific_holiday( $is_holidays_apend_str ) {
 	return '';
 } /* the_time_specific_holiday() */
 
-function the_time_colored( $date_format_str ) {
+function the_time_colored( $date_format_str, $dont_use_echo ) {
 	$options = get_option('widget_the_time_colored');
 	$widget_the_time_colored_sunday = (boolean)$options['widget_the_time_colored_sunday'];
 	$widget_the_time_colored_code_sunday = $options['widget_the_time_colored_code_sunday'];
@@ -123,7 +125,10 @@ function the_time_colored( $date_format_str ) {
 		$local_output .= $src_date_text . $specific_holiday_str;
 	$local_output .= '</span>';
 
-	echo $local_output;
+	if( $dont_use_echo )
+		return( $local_output );
+	else
+		echo $local_output;
 
 	return false;
 } /* the_time_colored() */
