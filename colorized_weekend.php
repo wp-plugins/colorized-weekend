@@ -3,7 +3,7 @@
 Plugin Name:  Colorized Weekend Widget
 Plugin URI: http://www.vjcatkick.com/?page_id=10750
 Description: Colorize date stamp
-Version: 0.0.4
+Version: 0.0.5
 Author: V.J.Catkick
 Author URI: http://www.vjcatkick.com/
 */
@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 - bug fix
 * Jan 09 2010 - v0.0.4
 - added echo/non echo option at function arguments
+* Jan 16 2010 - v0.0.5
+- bug fixed / if you want to use in PHP, use get_the_time_colored($dateformat)
 */
 
 function the_time_specific_holiday( $is_holidays_apend_str ) {
@@ -94,7 +96,7 @@ function the_time_specific_holiday( $is_holidays_apend_str ) {
 	return '';
 } /* the_time_specific_holiday() */
 
-function the_time_colored( $date_format_str, $dont_use_echo ) {
+function get_the_time_colored( $date_format_str ) {
 	$options = get_option('widget_the_time_colored');
 	$widget_the_time_colored_sunday = (boolean)$options['widget_the_time_colored_sunday'];
 	$widget_the_time_colored_code_sunday = $options['widget_the_time_colored_code_sunday'];
@@ -125,10 +127,14 @@ function the_time_colored( $date_format_str, $dont_use_echo ) {
 		$local_output .= $src_date_text . $specific_holiday_str;
 	$local_output .= '</span>';
 
-	if( $dont_use_echo )
-		return( $local_output );
-	else
-		echo $local_output;
+	return( $local_output );
+
+} /* get_the_time_colored() */
+
+function the_time_colored( $date_format_str ) {
+	$echoStr = get_the_time_colored( $date_format_str );
+
+	echo $echoStr;
 
 	return false;
 } /* the_time_colored() */
